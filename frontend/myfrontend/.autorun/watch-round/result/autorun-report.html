@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;800&family=Roboto:ital,wght@0,500;1,400&display=swap');
+
+	body {
+		font-family: 'Roboto', sans-serif;
+		background-color: #f0f0f0;
+		font-size: 15px;
+	}
+
+	.auto-test-report {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 20px;
+		min-width: 600px;
+	}
+
+	.report-tip {
+		opacity: 0.8;
+		padding-bottom: 20px;
+		font-size: 12px;
+		text-align: right;
+	}
+
+	.page {
+		background-color: transparent;
+		border: solid 1px #9fa4a8;
+		border-radius: 5px;
+		padding: 0 20px;
+		margin: 20px 0;
+		position: relative;
+		overflow: hidden;
+		transition: .4s ease;
+	}
+
+	.page.active {
+		background-color: #fff;
+		box-shadow: 0 3px 6px rgba(0, 0, 0, .1), 0 3px 6px rgba(0, 0, 0, .1);
+		border-color: #bababa;
+	}
+
+	.page.fail{
+		border-color: #f65454;
+	}
+
+	.page.fail.active{
+		box-shadow: 0 3px 6px rgb(255 0 0 / 10%), 0 3px 6px rgb(255 0 0 / 10%);
+		border-color: #f65454;
+	}
+
+	.page-header{
+		padding: 20px 0;
+		cursor: pointer;
+	}
+
+	.page-title {
+		margin: 0 35px 0 0;
+	}
+
+	.page.fail .page-title{
+		color: #f65454;
+	}
+
+	.page-title-container{
+		display:flex;
+		justify-content: space-between;
+	}
+
+	.page-sub-title{
+		margin-right: 0;
+	}
+
+	.page-toggle {
+		border: 0;
+		border-radius: 50%;
+		background-color: transparent;
+		font-size: 16px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		height: 20px;
+		width: 30px;
+	}
+
+	.page-toggle .bi-chevron-up {
+		display: none;
+	}
+
+	.page.active .page-toggle .bi-chevron-up {
+		display: block;
+	}
+
+	.page.active .page-toggle .bi-chevron-down {
+		display: none;
+	}
+
+	.test-list {
+		display: none;
+		padding: 10px 0px 20px 0;
+	}
+
+	.page.active .test-list {
+		display: block;
+	}
+
+	.test-item {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+		border-bottom: 1px dashed rgba(177, 175, 175, 0.45);
+	}
+
+	.bi-check-circle-fill{
+		color: #4caf50;
+	}
+
+	.bi-x-circle-fill{
+		color: #f65454;
+	}
+
+	.js-item {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
+	.js-exception {
+		padding: 0 10px;
+		font-family: Menlo, Monaco, "Courier New", monospace;
+		font-size: 13px;
+	}
+</style>
+</head>
+
+<body>
+	<div class="auto-test-report">
+		<div class="report-tip">测试耗时：4233 ms</div>
+		<div class="report-summary">测试结果：未出现崩溃 ，0 个页面出现渲染空白，0 个页面出现 JS 报错</div>
+		<div class="all-page-list">
+<div class="page active ">
+	<div class="page-header">
+		<h3 class="page-title">1. /pages/Demo</h3>
+		<div class="page-toggle">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down"
+				viewBox="0 0 16 16">
+				<path fill-rule="evenodd"
+					d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+			</svg>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up"
+				viewBox="0 0 16 16">
+				<path fill-rule="evenodd"
+					d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+			</svg>
+		</div>
+	</div>
+
+	<div class="test-list">
+		<div class="test-item">
+			<div class="test-title">未出现崩溃</div>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+</svg>
+		</div>
+		<div class="test-item">
+			<div class="test-title">未出现渲染空白</div>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+</svg>
+		</div>
+		<div class="js-item">
+			<div>未出现 JS 报错</div>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+</svg>
+		</div>
+		<div class="js-exception">
+			
+		</div>
+	</div>
+</div>
+</div>
+	</div>
+</body>
+
+<script>
+  const toggleBtns = document.querySelectorAll('.page-header');
+
+  toggleBtns.forEach(toggleBtn => {
+    toggleBtn.addEventListener('click', () => {
+      toggleBtn.parentNode.classList.toggle('active');
+    });
+  });
+</script>
+</html>

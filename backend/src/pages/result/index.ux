@@ -1,0 +1,162 @@
+<template>
+  <!-- template里只能有一个根节点 -->
+  <div class="wrapper">
+    <text class="title">{{ title }}</text>
+
+    <!-- 点击跳转详情页 -->
+    <input
+      class="btn"
+      type="button"
+      value="添加图片"
+      onclick="onCaptureBtnClick"
+    />
+
+    <input
+      class="btn"
+      type="button"
+      value="UX代码展示"
+      onclick="onDetailBtnClick"
+    />
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import fetch from '@system.fetch' 
+import media from '@system.media'
+import prompt from '@system.prompt'
+import file from '@system.file'
+import { Buffer } from 'buffer'
+
+// 选择图片并返回图片的URI
+function choosePhoto() {
+  return new Promise((resolve, reject) => {
+    media.pickImage({
+      success: function(data) {
+        console.log(`handling success: ${data.uri}`);
+        resolve(data.uri);
+      },
+      fail: function(data, code) {
+        console.log(`handling fail, code = ${code}, errorMsg=${data}`);
+        reject(`Error picking image: code ${code}, message ${data}`);
+      }
+    })
+  })
+}
+
+// 将ArrayBuffer转换为Base64编码的字符串
+function arrayBufferToBase64(arrayBuffer) {
+  const base64Data = Buffer.from(arrayBuffer).toString("base64");
+  //console.log(`base64 ${base64Data}`);
+  return base64Data;
+}
+
+// 从URI读取ArrayBuffer
+function readArrayBufferFromUri(uri) {
+  console.log('reading')
+  return new Promise((resolve, reject) => {
+    file.readArrayBuffer({
+      uri: uri,
+      success: function(data) {
+        //console.log(`handling success: ${data.buffer}`);
+        resolve(data.buffer);
+      },
+      fail: function(data, code) {
+        console.log(`handling fail, code = ${code}, errorMsg=${data}`);
+        reject(`Error picking image: code ${code}, message ${data}`);
+      }
+    })
+  })
+}
+
+// 异步上传图片并处理响应
+function uploadImage(base64Image) {
+  console.log(`uploading`)
+  console.log(`${base64Image}`)
+  fetch.fetch({
+    url: 'http://10.52.34.248:7001/upload',
+    responseType: 'text',
+    method: 'POST',
+        data: {
+          filename:"photo",
+          base64: base64Image
+        },
+    success: function(response) {
+      console.log(`the status code of the response: ${response.code}`)
+      console.log(`the data of the response: ${response.data}`)
+      console.log(
+        `the headers of the response: ${JSON.stringify(response.headers)}`
+      )
+      return response.data.message;
+    },
+    fail: function(data, code) {
+      console.log(`upload handling fail, errMsg = ${data}`)
+      console.log(`handling fail, errCode = ${code}`)
+    }
+  })
+}
+
+export default {
+  // 页面级组件的数据模型
+  data: {
+    title: 'Capture to ux code',
+  },
+
+  onInit() {
+    // 初始化操作
+  },
+  
+  // 处理拍照按钮点击事件
+  async onCaptureBtnClick() {
+    console.log('choosing')
+    try {
+      const uri = await choosePhoto();
+      const arrayBuffer = await readArrayBufferFromUri(uri);
+      const base64Image = arrayBufferToBase64(arrayBuffer);
+      const html_txt = await uploadImage(base64Image);
+      console.log(`receive message ${html_txt}`)
+    } catch (error) {
+      prompt.showToast({
+        message: `操作失败: ${error}`
+      });
+    }
+  },
+  
+  // 处理详情按钮点击事件
+  onDetailBtnClick() {
+    router.push({
+      uri: '/pages/UxcodePre',
+    });
+  },
+}
+</script>
+
+<style lang="less">
+@import './../../assets/styles/style.less';
+
+.wrapper {
+  .flex-box-mixins(column, center, center);
+  padding: 20 * @size-factor; // 添加内边距以增强视觉舒适度
+  background-color: @light-grey; // 增加背景色，突出按钮
+
+  .title {
+    font-size: 10 * @size-factor; // 放大标题字体
+    text-align: center;
+    color: @brand; // 使用品牌主色
+    font-weight: bold;
+    margin-bottom: 20 * @size-factor; // 增加标题与按钮的间距
+  }
+
+  .btn {
+    width: 40%; // 相对宽度，适配不同屏幕
+    height: 40 * @size-factor; // 增加按钮高度
+    border-radius: 10 * @size-factor; // 更柔和的圆角
+    font-size: 30px; // 优化字体大小
+    text-align: center;
+    border: 5px solid #2c78b6;
+    background-color: @brand;
+    color: #ffffff;
+    margin-top: 16 * @size-factor;
+  }
+}
+</style>

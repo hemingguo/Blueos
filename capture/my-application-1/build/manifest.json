@@ -1,0 +1,64 @@
+{
+  "package": "com.example.demo",
+  "name": "demo",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "icon": "/assets/images/logo.png",
+  "features": [
+    {
+      "name": "system.prompt"
+    },
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.shortcut"
+    },
+    {
+      "name": "system.fetch"
+    }
+  ],
+  "permissions": [
+    {
+      "origin": "*"
+    }
+  ],
+  "appType": "quickapp",
+  "template/official": "demo-template",
+  "config": {
+    "logLevel": "debug",
+    "debug": true
+  },
+  "router": {
+    "entry": "pages/Main",
+    "pages": {
+      "pages/Main": {
+        "component": "index"
+      },
+      "pages/UxcodePre": {
+        "component": "index"
+      }
+    }
+  },
+  "display": {
+    "titleBarBackgroundColor": "#f2f2f2",
+    "titleBarTextColor": "#414141",
+    "pages": {
+      "pages/Main": {
+        "titleBarText": "Capture transformer"
+      },
+      "pages/UxcodePre": {
+        "titleBarText": "UX代码展示"
+      }
+    }
+  },
+  "minPlatformVersion": 1070,
+  "packageInfo": {
+    "originType": "quickapp-ide",
+    "toolkit": "1.9.14",
+    "timeStamp": "2024-11-21T06:54:42.822Z",
+    "node": "v16.13.0",
+    "platform": "win32",
+    "arch": "x64"
+  }
+}
