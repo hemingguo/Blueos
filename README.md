@@ -11,7 +11,7 @@
 - **作品标题**：前端魔法师
 - **版本**：v1.0
 - **作者/团队**：这个需求做不了
-- **联系方式**：sosljsos@qq.com
+- **联系方式**：sosljsos@protonmail.com
 
 ## 作品概述
 详见README.pdf
